@@ -32,6 +32,12 @@ let currentMonth = new Date().getMonth();
 
 let currentNoteOpen = null;
 
+function formatExtraHours(decimalHours) {
+  const hours = Math.floor(decimalHours);
+  const minutes = Math.round((decimalHours - hours) * 60);
+  return `${hours}h ${minutes}min`;
+}
+
 function loadWorkedDays() {
   fetch('/load')
     .then(res => res.json())
@@ -98,7 +104,10 @@ popupSave.addEventListener("click", () => {
       workedDays[dateKey].position = "";
     }
   
-    workedDays[dateKey].extraHours = parseInt(popupOvertime.value) || 0;
+    const extraH = parseInt(document.getElementById("popup-overtime-hours").value) || 0;
+const extraM = parseInt(document.getElementById("popup-overtime-minutes").value) || 0;
+workedDays[dateKey].extraHours = extraH + extraM / 60;
+
   
     popup.classList.add("hidden");
     renderCalendar();
@@ -152,7 +161,9 @@ document.getElementById("remove-overtime").addEventListener("click", () => {
   const dateKey = popup.dataset.date;
   if (workedDays[dateKey]) {
     workedDays[dateKey].extraHours = 0;
-    popupOvertime.value = "";
+document.getElementById("popup-overtime-hours").value = "";
+document.getElementById("popup-overtime-minutes").value = "";
+
     renderCalendar();
     saveWorkedDays();
   }
@@ -247,7 +258,13 @@ function renderCalendar() {
 
     let html = `<strong>${day}</strong>`;
     if (info?.position) html += `<div class="info">${info.position}</div>`;
-    if (info?.extraHours) html += `<div class="info">+${info.extraHours}h</div>`;
+    if (info?.extraHours) {
+      const hrs = Math.floor(info.extraHours);
+      const mins = Math.round((info.extraHours % 1) * 60);
+      const extraText = mins > 0 ? `${hrs}h ${mins}min` : `${hrs}h`;
+      html += `<div class="info">+${extraText}</div>`;
+    }
+    
     if (info?.isHoliday) html += `<div class="info">URLOP</div>`;
     if (info?.isSick) html += `<div class="info">ZL</div>`;
     if (info?.isFreeDayForOvertime) html += `<div class="info">Wolne (nadgodziny)</div>`;
@@ -316,7 +333,10 @@ function openPopup(dateKey, dateObj) {
     if (activeBtn) activeBtn.classList.add("selected");
   }
 
-  popupOvertime.value = info.extraHours || "";
+  const overtime = info.extraHours || 0;
+document.getElementById("popup-overtime-hours").value = Math.floor(overtime);
+document.getElementById("popup-overtime-minutes").value = Math.round((overtime % 1) * 60);
+
   popupNote.value = info.note || "";
   document.getElementById("popup-holiday").checked = !!info.isHoliday;
   document.getElementById("popup-sick").checked = !!info.isSick;
@@ -385,7 +405,7 @@ function updateSummary() {
 
   // 📌 Ustaw aktualne wartości
   workedEl.textContent = hoursWorked;
-  overtimeEl.textContent = overtime;
+ overtimeEl.textContent = formatExtraHours(overtime);
   plannedEl.textContent = plannedHours;
   holidayEl.textContent = leaveDays;
   sickEl.textContent = sickDays;
