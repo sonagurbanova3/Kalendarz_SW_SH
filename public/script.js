@@ -465,7 +465,7 @@ document.getElementById('cancel-position-select').addEventListener('click', () =
 
 document.getElementById("save-to-server").addEventListener("click", async () => {
   try {
-    const response = await fetch("http://localhost:3000/save", {
+    const response = await fetch("https://kalendarz-sw-sh.onrender.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,1 +1,11 @@
-{}
+{
+  "2025-3-7": {
+    "worked": false,
+    "isHoliday": true,
+    "isSick": false,
+    "note": "",
+    "isFreeDayForOvertime": false,
+    "freeDayFromOvertime": false,
+    "extraHours": 0
+  }
+}
