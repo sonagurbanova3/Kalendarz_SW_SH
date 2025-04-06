@@ -491,7 +491,7 @@ document.getElementById('cancel-position-select').addEventListener('click', () =
 
 document.getElementById("save-to-server").addEventListener("click", async () => {
   try {
-    const response = await fetch("https://kalendarz-sw.netlify.app/save", {
+    const response = await fetch("https://kalendarz-sw-sh.onrender.com/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
