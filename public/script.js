@@ -340,6 +340,10 @@ function updateSummary() {
     if (!info) continue;
 
     const [year, month, day] = key.split("-").map(Number);
+
+    // 🔍 Przefiltruj tylko dane z aktualnie wyświetlanego miesiąca
+    if (year !== currentYear || month !== currentMonth) continue;
+
     const date = new Date(year, month, day);
     const weekday = date.getDay();
     const isWeekend = weekday === 0 || weekday === 6;
@@ -379,12 +383,14 @@ function updateSummary() {
     }
   }
 
+  // 📌 Ustaw aktualne wartości
   workedEl.textContent = hoursWorked;
   overtimeEl.textContent = overtime;
   plannedEl.textContent = plannedHours;
   holidayEl.textContent = leaveDays;
   sickEl.textContent = sickDays;
 }
+
 
 function formatFullDate(today, year, month) {
   const currentView = new Date(year, month, today.getDate());
