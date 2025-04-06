@@ -477,6 +477,6 @@ document.getElementById("save-to-server").addEventListener("click", async () => 
     alert(result.message || "Dane zostały zapisane!");
   } catch (error) {
     console.error("Błąd zapisu:", error);
-    alert("Wystąpił błąd podczas zapisu danych.");
+    alert(`Błąd zapisu: ${error.message}`);
   }
 });
