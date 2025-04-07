@@ -405,7 +405,7 @@ function updateSummary() {
 
   // 📌 Ustaw aktualne wartości
   workedEl.textContent = hoursWorked;
- overtimeEl.textContent = formatExtraHours(overtime);
+  overtimeEl.textContent = overtime;
   plannedEl.textContent = plannedHours;
   holidayEl.textContent = leaveDays;
   sickEl.textContent = sickDays;
@@ -491,7 +491,7 @@ document.getElementById('cancel-position-select').addEventListener('click', () =
 
 document.getElementById("save-to-server").addEventListener("click", async () => {
   try {
-    const response = await fetch("https://kalendarz-sw.netlify.app/save", {
+    const response = await fetch("https://kalendarz-sw-sh.onrender.com/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
