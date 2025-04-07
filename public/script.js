@@ -491,7 +491,7 @@ document.getElementById('cancel-position-select').addEventListener('click', () =
 
 document.getElementById("save-to-server").addEventListener("click", async () => {
   try {
-    const response = await fetch("https://resonant-pixie-cd34be.netlify.app/save", {
+    const response = await fetch("https://kalendarz-jak-rem.netlify.app/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
